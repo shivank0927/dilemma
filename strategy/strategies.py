@@ -1,60 +1,85 @@
-import numpy as np
+import random
 
 class Strategies:
-    
-    def __init__(self, last_move):
-        
-        self.last_move = True
-    
+    def __init__(self, history):
+        self.history = history
+
 class TitForTat(Strategies):
     
-    def __init__(self, last_move):
-    
+    def __init__(self, history):
+        super().__init__(history)
+        
         self.name = "Tit for Tat"
+    
+    def get_move(self):
+        
+        if len(self.history) == 0 or self.history[-1] == 1:
+            return 1
+        return 0
 
 class AlwaysCooperate(Strategies):
     
-    def __init__(self, last_move):
+    def __init__(self, history):
+        super().__init__(history)
         
-        self.name = "Always Co-operate"
+        self.name = "Always Cooperate"
+    
+    def get_move(self):    
+        
+        return 1
 
 class AlwaysDefect(Strategies):
     
-    def __init__(self, last_move):
+    def __init__(self, history):
+        super().__init__(history)
         
         self.name = "Always Defect"
-
+    
+    def get_move(self):
+        
+        return 0
 
 class TitForTwoTats(Strategies):
     
-    def __init__(self, last_move):
+    def __init__(self, history):
+        super().__init__(history)
         
         self.name = "Tit for Two Tats"
-
-class Random(Strategies):
     
-    def __init__(self, last_move):
+    def get_move(self):
+        
+        if len(self.history) < 2:
+            return 1 
+        
+        if self.history[-1] == 0 and self.history[-2] == 0:
+            return 0
+        
+        return 1
+
+class RandomChoice(Strategies): 
+    
+    def __init__(self, history):
+        super().__init__(history)
         
         self.name = "Random"
-
-
-class Spiteful(Strategies):
     
-    def __init__(self, last_move):
+    def get_move(self):
         
-        self.name = "Spiteful"
-
-        
-class PavLov(Strategies):
-    
-    def __init__(self, last_move):
-        
-        self.name = "PavLov"
+        return random.randint(0, 1)
 
 
 class GrimTrigger(Strategies):
     
-    def __init__(self, last_move):
+    def __init__(self, history):
+        super().__init__(history)
         
         self.name = "Grim Trigger"
+    
+    def get_move(self):
+        
+        if 0 in self.history:
+            return 0 
+        return 1
 
+
+strategy = [TitForTat, AlwaysCooperate, AlwaysDefect, TitForTwoTats, RandomChoice, GrimTrigger]
