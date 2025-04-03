@@ -4,68 +4,63 @@ import pandas as pd
 
 HISTORY = []
 
+def calcpoints(p1, p2):
+    lookup = {
+        (0, 0): (0, 0),
+        (0, 1): (5, 1),
+        (1, 0): (1, 5),
+        (1, 1): (3, 3)
+    }
+    
+    return lookup[(p1, p2)] # the issue is how to return cooperate or defect msg? for the dataframe in lates!
+
+    
 def combinations():
 
     return list(itertools.combinations(strategy, 2))
 
 def calculate():
-    
-    pairs = combinations()
-    results = {}
 
-    for _ in range(50): # later add the number of simulations for now 50 only. OR CALL THIS IN ANOTHER FUNC.
-        matches = []
-        p1pts, p2pts = 0, 0
-        
-        for playerOne, playerTwo in pairs:
+    try:
+        result = {}
+        pairs = combinations() # 10 combinations
 
-            p1 = playerOne() 
-            p2 = playerTwo()
+        for i, j in pairs:
+
+            p1, p2 = i(), j() # instantiating class!
+
+            p1name, p2name = p1.name, p2.name
+            p1pts, p2pts = 0, 0
+            p1move, p2move = p1.move(HISTORY), p2.move(HISTORY)
+            HISTORY.append([p1move, p2move])
+
+            result["player A"] = p1name
+            result["player B"] = p2name
             
-            p1name = p1.name
-            p2name = p2.name
             
-            results["strategy A"] = p1name
-            results["strategy B"] = p2name
+            points = calcpoints(p1move, p2move)
             
-            matches.append((p1.move(HISTORY), p2.move(HISTORY)))
+            # result["A's move": "co-opertae"]
 
-            for points in matches:
-                
-                if points[0] == 0 and points[1] == 0:
-                    results["status (A)"] = "defected" # both defect
-                    results["status (B)"] = "defected" 
-                    
-                elif points[0] == 1 and points[1] == 1: # both co-operate
-                    
-                    p1pts += 3
-                    p2pts += 3
-                    results["status (A)"] = "co-operated" 
-                    results["status (B)"] = "co-operated" 
-                
-                elif points[0] == 0 and points[1] == 1:
-                    
-                    results["status (A)"] = "defected" 
-                    results["status (B)"] = "co-operated" 
-                    
-                    p1pts += 5 # reward the cheater
-                    p2pts += 1 
-                
-                elif points[1] == 1 and points[0] == 0:
-                    
-                    results["status (A)"] = "co-operated" 
-                    results["status (B)"] = "defected" 
-                    p1pts += 1
-                    p2pts += 5
-                    
-                else:
-                    rest=9
-                
-                HISTORY.append((p1.move(HISTORY), p2.move(HISTORY)))
-                
-    return results # append results to some other list
 
-dictionary = calculate()
+        return result
 
-df = pd.DataFrame(data=dictionary)
-print(df)
+    except Exception as e:
+        print(e)
+
+def simulations(simulation: int):
+    final_result = []
+
+    for _ in range(simulation):
+
+        result = calculate()
+        final_result.append(result)
+
+    return final_result
+
+
+result_simulation = simulations(1)
+print(result_simulation) # 1 loop for now atelast 
+
+# df = pd.DataFrame(data=result_simulation)
+# print(df)
