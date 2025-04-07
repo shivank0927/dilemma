@@ -40,9 +40,7 @@ def calculate():
             
             points = calcpoints(p1move, p2move)
             
-            # result["A's move": "co-opertae"]
-
-
+            # result["A's move": "co-opertae"] 
         return result
 
     except Exception as e:
