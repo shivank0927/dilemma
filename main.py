@@ -5,7 +5,7 @@ from simulation.simulator import *
 
 while True:
     try:
-        counts = int(input("Enter simulation counts"))
+        counts = int(input("""Enter simulation counts, \nEach simulation has random ranged rounds between 1-1000 rounds.\n>> """))
         break
 
     except Exception as e:

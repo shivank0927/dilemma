@@ -4,8 +4,7 @@ import random
 import matplotlib.pyplot as plt
 import sys
 import os
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # no idea
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # no idea about this
 from strategies.strategy import strategy_list
 
 
@@ -56,7 +55,7 @@ def calculate(counter_sim, rounds=random.randint(1, 10000)): # random rounds for
 
             result["A's point"] = int(p1pts)
             result["B's point"] = int(p2pts)
-            
+ 
             result["result"] = int(p1pts + p2pts)
             result["simulation"] = counter_sim
 
@@ -91,7 +90,7 @@ def simulations(simulation: int):
         "B's point": "sum"
     }) 
 
-    merged = merged.drop("simulation", axis=1)
+    merged = merged.drop("simulation", axis=1) # ...
     merged["result"] = merged.apply(result_msg, axis=1)
 
     return merged
