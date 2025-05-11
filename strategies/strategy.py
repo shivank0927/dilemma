@@ -100,5 +100,5 @@ class Joss(Strategy):
             return 0
         return 0 if random.randint(1, 6) == 4 else 1 # 1/6 chance to defect despite other player being cooperative
 
-
+    
 strategy_list = [TitForTat, AlwaysCooperate, AlwaysDefect, Random, GrimTrigger, TitForTwoTats, SuspiciousTitForTat, Joss]

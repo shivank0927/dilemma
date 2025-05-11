@@ -4,7 +4,9 @@ import random
 import matplotlib.pyplot as plt
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # no idea about this
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))) # no idea
+
 from strategies.strategy import strategy_list
 
 
@@ -28,7 +30,7 @@ def calcpoints(p1: int, p2: int):
     return (noise(base[0]), noise(base[1])) 
 
 
-def calculate(counter_sim, rounds=random.randint(1, 10000)): # random rounds for noisy env
+def calculate(counter_sim, rounds=random.randint(1, 1000)): # random rounds for noisy env
     results = []
     pairs = combinations()
 
@@ -86,8 +88,8 @@ def simulations(simulation: int):
     frame = pd.DataFrame(data=final_result)
 
     merged = frame.groupby(["simulation", "player A", "player B"], as_index=False).agg({ # grouping rounds. with no index
-        "A's point": "sum",
-        "B's point": "sum"
+        "A's Score": "sum",
+        "B's Score": "sum"
     }) 
 
     merged = merged.drop("simulation", axis=1) # ...
